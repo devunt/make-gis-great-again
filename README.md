@@ -11,5 +11,9 @@ So this web extension simply adds "View Image" button to Google Image Search res
 * Chrome: https://chrome.google.com/webstore/detail/google-search-view-image/hgngncnljacgakaiifjcgdnknaglfipo
 
 
+## Userscripts
+* Greasemonkey/Tampermonkey: https://raw.githubusercontent.com/devunt/make-gis-great-again/master/gis-vib.user.js
+
+
 ## Screenshots
 ![Screenshot](https://i.imgur.com/jCaAvpj.jpg)

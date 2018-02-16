@@ -212,7 +212,7 @@
         "*://*.google.co.zw/*"
       ],
       "include_globs": ["*tbm=isch*"],
-      "js": ["./app.js"]
+      "js": ["./gis-vib.user.js"]
     }
   ]
 }
