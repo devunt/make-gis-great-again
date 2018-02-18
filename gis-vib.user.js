@@ -2,7 +2,7 @@
 // @name            Google Search "View Image" Button
 // @name:ru         Google Search кнопка "Показать в полном размере"
 // @namespace       https://github.com/devunt/make-gis-great-again
-// @version         1.2.1
+// @version         1.2.2
 // @description     This userscript adds "View Image" button to Google Image Search results.
 // @description:ru  Этот скрипт добавляет кнопку "Показать в полном размере" к результатам Google Image Search.
 // @author          Bae Junehyeon
@@ -21,6 +21,12 @@ function addButton(node) {
   if (node.nodeType === Node.ELEMENT_NODE) {
     if (node.classList.contains('irc_ris')) {
       let container = node.closest('.irc_c');
+      
+      let similarImages = node.querySelectorAll('.rg_l');
+      similarImages.forEach((image) => {
+        image.addEventListener('click', updateLinkAfterClickOnSimilar);
+      });
+      
       let thumbnail = document.querySelector('img[name="' + container.dataset.itemId + '"]');
       let meta = thumbnail.closest('.rg_bx').querySelector('.rg_meta');
 
@@ -50,6 +56,14 @@ function addButton(node) {
       link.href = src;
     }
   }
+}
+
+function updateLinkAfterClickOnSimilar({target:node}) {
+  let src = unescape(node.closest('.rg_l').href.match(/imgurl=([^&]+)/)[1]);
+  let container = node.closest('.irc_c');
+  let button = container.querySelector('.mgisga');
+  let link = button.querySelector('a');
+  link.href = src;
 }
 
 const observer = new MutationObserver((mutations) => {
