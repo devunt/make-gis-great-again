@@ -11,8 +11,8 @@
 // ==/UserScript==
 
 const lang = {
-	en: 'View Image',
-	ru: 'Показать в полном размере'
+  en: 'View Image',
+  ru: 'Показать в полном размере'
 };
 
 const localizedViewImage = lang[(lang[navigator.language] ? navigator.language : 'en')];
