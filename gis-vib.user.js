@@ -12,7 +12,8 @@
 
 const lang = {
   en: 'View Image',
-  ru: 'Показать в полном размере'
+  ru: 'Показать в полном размере',
+  ja: '画像を表示',
 };
 
 const localizedViewImage = lang[(lang[navigator.language] ? navigator.language : 'en')];
