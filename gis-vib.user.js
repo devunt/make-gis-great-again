@@ -1,13 +1,21 @@
 // ==UserScript==
-// @name         Google Search "View Image" Button
-// @namespace    https://github.com/devunt/make-gis-great-again
-// @version      1.2
-// @description  This userscript adds "View Image" button to Google Image Search results.
-// @author       Bae Junehyeon
-// @run-at       document-end
-// @include      http*://*.google.tld/search*tbm=isch*
+// @name            Google Search "View Image" Button
+// @name:ru         Google Search кнопка "Показать в полном размере"
+// @namespace       https://github.com/devunt/make-gis-great-again
+// @version         1.2.1
+// @description     This userscript adds "View Image" button to Google Image Search results.
+// @description:ru  Этот скрипт добавляет кнопку "Показать в полном размере" к результатам Google Image Search.
+// @author          Bae Junehyeon
+// @run-at          document-end
+// @include         http*://*.google.tld/search*tbm=isch*
 // ==/UserScript==
 
+const lang = {
+  en: 'View Image',
+  ru: 'Показать в полном размере'
+};
+
+const localizedViewImage = lang[(lang[navigator.language] ? navigator.language : 'en')];
 
 function addButton(node) {
   if (node.nodeType === Node.ELEMENT_NODE) {
@@ -27,7 +35,7 @@ function addButton(node) {
 
         button = openButton.cloneNode(true);
         button.classList.add('mgisga');
-        button.querySelector('._WKw').innerText = 'View image';
+        button.querySelector('._WKw').innerText = localizedViewImage;
 
         let link = button.querySelector('a');
         link.href = src;
