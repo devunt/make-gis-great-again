@@ -2,7 +2,7 @@
 // @name            Google Search "View Image" Button
 // @name:ru         Google Search кнопка "Показать в полном размере"
 // @namespace       https://github.com/devunt/make-gis-great-again
-// @version         1.2.2
+// @version         1.3
 // @description     This userscript adds "View Image" button to Google Image Search results.
 // @description:ru  Этот скрипт добавляет кнопку "Показать в полном размере" к результатам Google Image Search.
 // @author          Bae Junehyeon
