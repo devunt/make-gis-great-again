@@ -18,7 +18,10 @@ const lang = {
   ja: '画像を表示',
   he: 'הצג תמונה',
   fr: 'Voir l\'image',
-  sl: 'Ogled slike'
+  sl: 'Ogled slike',
+  ar: 'عرض الصورة',
+  de: 'Bild ansehen',
+  fr: 'Voir l\'image'
 };
 
 const localizedViewImage = lang[(lang[navigator.language] ? navigator.language : 'en')];
