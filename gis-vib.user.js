@@ -25,7 +25,7 @@ function addButton(node) {
       let container = node.closest('.irc_c');
       
       let similarImages = node.querySelectorAll('.rg_l');
-      similarImages.forEach((image) => {
+      [].forEach.call(similarImages, (image) => {
         image.addEventListener('click', updateLinkAfterClickOnSimilar);
       });
       
@@ -72,7 +72,7 @@ const observer = new MutationObserver((mutations) => {
   mutations.forEach((mutation) => {
     const addedNodes = mutation.addedNodes || [];
 
-    addedNodes.forEach((newNode) => {
+    [].forEach.call(addedNodes, (newNode) => {
         addButton(newNode);
     });
   });
