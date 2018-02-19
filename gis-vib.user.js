@@ -2,11 +2,13 @@
 // @name            Google Search "View Image" Button
 // @name:ru         Google Search кнопка "Показать в полном размере"
 // @name:sl         Gumb "Ogled slike" na Google Slikah
+// @name:lt         Google paieškos mygtukas "Rodyti vaizdą"
 // @namespace       https://github.com/devunt/make-gis-great-again
 // @version         1.3
 // @description     This userscript adds "View Image" button to Google Image Search results.
 // @description:ru  Этот скрипт добавляет кнопку "Показать в полном размере" к результатам Google Image Search.
 // @description:sl  Ponovno prikaže gumb "Ogled slike" na Google Slikah.
+// @description:lt  Šis vartotojo skriptas prideda mygtuką "Rodyti vaizdą" į Google vaizdo paieškos rezultatus.
 // @author          Bae Junehyeon
 // @run-at          document-end
 // @include         http*://*.google.tld/search*tbm=isch*
@@ -22,7 +24,8 @@ const lang = {
   ar: 'عرض الصورة',
   de: 'Bild ansehen',
   fr: 'Voir l\'image',
-  pt: 'Ver imagem'
+  pt: 'Ver imagem',
+  lt: 'Rodyti vaizdą',
 };
 
 const localizedViewImage = lang[(lang[navigator.language] ? navigator.language : 'en')];
