@@ -1,10 +1,12 @@
 // ==UserScript==
 // @name            Google Search "View Image" Button
 // @name:ru         Google Search кнопка "Показать в полном размере"
+// @name:sl         Gumb "Ogled slike" na Google Slikah
 // @namespace       https://github.com/devunt/make-gis-great-again
 // @version         1.3
 // @description     This userscript adds "View Image" button to Google Image Search results.
 // @description:ru  Этот скрипт добавляет кнопку "Показать в полном размере" к результатам Google Image Search.
+// @description:sl  Ponovno prikaže gumb "Ogled slike" na Google Slikah.
 // @author          Bae Junehyeon
 // @run-at          document-end
 // @include         http*://*.google.tld/search*tbm=isch*
@@ -16,6 +18,7 @@ const lang = {
   ja: '画像を表示',
   he: 'הצג תמונה',
   fr: 'Voir l\'image',
+  sl: 'Ogled slike',
   ar: 'عرض الصورة',
   de: 'Bild ansehen',
   fr: 'Voir l\'image'
