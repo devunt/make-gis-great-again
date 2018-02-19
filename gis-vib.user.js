@@ -15,6 +15,8 @@ const lang = {
   ru: 'Показать в полном размере',
   ja: '画像を表示',
   he: 'הצג תמונה',
+  fr: 'Voir l\'image',
+  ar: 'عرض الصورة',
   de: 'Bild ansehen',
   fr: 'Voir l\'image'
 };
