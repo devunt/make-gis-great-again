@@ -15,7 +15,8 @@ const lang = {
   ru: 'Показать в полном размере',
   ja: '画像を表示',
   he: 'הצג תמונה',
-  fr: 'Voir l\'image'
+  fr: 'Voir l\'image',
+  ar: 'عرض الصورة'
 };
 
 const localizedViewImage = lang[(lang[navigator.language] ? navigator.language : 'en')];
@@ -24,12 +25,12 @@ function addButton(node) {
   if (node.nodeType === Node.ELEMENT_NODE) {
     if (node.classList.contains('irc_ris')) {
       let container = node.closest('.irc_c');
-      
+
       let similarImages = node.querySelectorAll('.rg_l');
       [].forEach.call(similarImages, (image) => {
         image.addEventListener('click', updateLinkAfterClickOnSimilar);
       });
-      
+
       let thumbnail = document.querySelector('img[name="' + container.dataset.itemId + '"]');
       let meta = thumbnail.closest('.rg_bx').querySelector('.rg_meta');
 
@@ -61,7 +62,9 @@ function addButton(node) {
   }
 }
 
-function updateLinkAfterClickOnSimilar({target:node}) {
+function updateLinkAfterClickOnSimilar({
+  target: node
+}) {
   let src = unescape(node.closest('.rg_l').href.match(/imgurl=([^&]+)/)[1]);
   let container = node.closest('.irc_c');
   let button = container.querySelector('.mgisga');
@@ -74,7 +77,7 @@ const observer = new MutationObserver((mutations) => {
     const addedNodes = mutation.addedNodes || [];
 
     [].forEach.call(addedNodes, (newNode) => {
-        addButton(newNode);
+      addButton(newNode);
     });
   });
 });
