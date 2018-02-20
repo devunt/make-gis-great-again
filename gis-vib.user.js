@@ -116,9 +116,10 @@ function searchOtherResolutions() {
 function updateLinkAfterClickOnSimilar({target:node}) {
   let src = unescape(node.closest('.rg_l').href.match(/imgurl=([^&]+)/)[1]);
   let container = node.closest('.irc_c');
-  let button = container.querySelector('mgisga_fullSize');
-  linkToCurrentImage = button.querySelector('a');
-  link.href = linkToCurrentImage;
+  let button = container.querySelector('.mgisga_fullSize');
+  let link = button.querySelector('a');
+  link.href = src;
+  linkToCurrentImage = src;
 }
 
 const observer = new MutationObserver((mutations) => {
