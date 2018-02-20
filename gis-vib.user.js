@@ -25,6 +25,8 @@ const lang = {
   fr: 'Voir l\'image',
   pt: 'Ver imagem',
   pl: 'Pokaż Obraz',
+  se: 'Visa bild',
+  uk: 'Показати зображення'
 };
 
 const localizedViewImage = lang[(lang[navigator.language] ? navigator.language : 'en')];
