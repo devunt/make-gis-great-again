@@ -21,6 +21,9 @@ const lang = {
   sl: 'Ogled slike',
   ar: 'عرض الصورة',
   de: 'Bild ansehen',
+  fr: 'Voir l\'image',
+  pt: 'Ver imagem',
+  se: 'Visa bild',
   uk: 'Показати зображення',
   pt: 'Ver imagem'
 };
