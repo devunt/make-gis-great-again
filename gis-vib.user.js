@@ -9,6 +9,7 @@
 // @description:ru  Этот скрипт добавляет кнопку "Показать в полном размере" к результатам Google Image Search.
 // @description:sl  Ponovno prikaže gumb "Ogled slike" na Google Slikah.
 // @description:lt  Šis vartotojo skriptas prideda mygtuką "Rodyti vaizdą" į Google vaizdo paieškos rezultatus.
+// @description:pl  Ten skrypt przywraca przycisk "Pokaż Obraz" do wyszukiwarki obrazów Google
 // @author          Bae Junehyeon
 // @run-at          document-end
 // @include         http*://*.google.tld/search*tbm=isch*
@@ -26,6 +27,9 @@ const lang = {
   fr: 'Voir l\'image',
   pt: 'Ver imagem',
   lt: 'Rodyti vaizdą',
+  pl: 'Pokaż Obraz',
+  se: 'Visa bild',
+  uk: 'Показати зображення'
 };
 
 const localizedViewImage = lang[(lang[navigator.language] ? navigator.language : 'en')];
