@@ -22,7 +22,8 @@ const lang = {
   ar: 'عرض الصورة',
   de: 'Bild ansehen',
   fr: 'Voir l\'image',
-  pt: 'Ver imagem'
+  pt: 'Ver imagem',
+  se: 'Visa bild'
 };
 
 const localizedViewImage = lang[(lang[navigator.language] ? navigator.language : 'en')];
