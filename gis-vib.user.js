@@ -21,7 +21,7 @@ const lang = {
   sl: 'Ogled slike',
   ar: 'عرض الصورة',
   de: 'Bild ansehen',
-  ua:'Показати зображення',
+  uk: 'Показати зображення',
   pt: 'Ver imagem'
 };
 
