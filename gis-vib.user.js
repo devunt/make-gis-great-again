@@ -102,10 +102,12 @@ function addButton(buttonContainer, buttonClass, buttonText, buttonReaction) {
 }
 
 function searchOtherResolutions() {
+  showSplashscreen();
   GM_xmlhttpRequest({
     method: 'GET',
     url: 'https://images.google.com/searchbyimage?&image_url=' + linkToCurrentImage,
     onload: response=>{
+      removeSplashscreen();
       let imgID = response.responseText.match(/simg:([^&]+)/)[1];
       let tld = location.host.match(/\w+$/)[0];
       location.href = 'https://www.google.' + tld + '/search?tbm=isch&tbs=simg:' + imgID;
@@ -120,6 +122,36 @@ function updateLinkAfterClickOnSimilar({target:node}) {
   let link = button.querySelector('a');
   link.href = src;
   linkToCurrentImage = src;
+}
+
+function showSplashscreen() {
+  let splashscreen = document.body.appendChild(document.createElement('div'));
+  splashscreen.classList.add('mgisga_splashscreen');
+  splashscreen.style = `
+background: black;
+position: fixed;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+z-index: 103;
+opacity: 0.7;
+`;
+
+  let spinner = splashscreen.appendChild(document.createElement('img'));
+  spinner.src = 'https://www.google.com/images/spin-24.gif';
+  spinner.style = `
+position: fixed;
+left: calc(50% - 12px);
+top: calc(50% - 12px);
+filter: invert();
+`;
+}
+
+function removeSplashscreen() {
+  let splashscreen = document.querySelector('.mgisga_splashscreen');
+  if (splashscreen)
+    splashscreen.remove();
 }
 
 const observer = new MutationObserver((mutations) => {
