@@ -62,18 +62,18 @@ function processElement(node) {
       let meta = thumbnail.closest('.rg_bx').querySelector('.rg_meta');
 
       let metadata = JSON.parse(meta.innerHTML);
-      linkToCurrentImage = metadata.ou;
+      let src = metadata.ou;
 
       let buttons = container.querySelector('.irc_but_r tr');
-
       let button = buttons.querySelector('td.mgisga_fullSize');
       if (button === null) {
-        addButton(buttons, 'mgisga_fullSize', getLocalizedString('viewImage'), linkToCurrentImage);
+        addButton(buttons, 'mgisga_fullSize', getLocalizedString('viewImage'), src);
         addButton(buttons, 'mgisga_otherRes', getLocalizedString('otherResolutions'), searchOtherResolutions);
+      } else {
+        let link = button.querySelector('a');
+        link.href = src;
       }
-
-      let link = button.querySelector('a');
-      link.href = src;
+      linkToCurrentImage = src;
     }
   }
 }
@@ -153,6 +153,7 @@ function removeSplashscreen() {
   if (splashscreen)
     splashscreen.remove();
 }
+
 
 const observer = new MutationObserver((mutations) => {
   mutations.forEach((mutation) => {
