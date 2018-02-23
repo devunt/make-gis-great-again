@@ -16,6 +16,9 @@
 // @author          Bae Junehyeon
 // @run-at          document-end
 // @include         http*://*.google.tld/search*tbm=isch*
+// @include         http*://*.google.com.tld/search*tbm=isch*
+// @include         http*://*.google.tld/imgres*
+// @include         http*://*.google.com.tld/imgres*
 // @grant           GM_xmlhttpRequest
 // @connect         images.google.com
 // ==/UserScript==
@@ -43,41 +46,39 @@ const lang = {
 };
 
 function getLocalizedString(string) {
-  return lang[navigator.language][string] ?
-         lang[navigator.language][string] :
-         lang.en[string];
+  let localized = lang.en[string];
+  if (lang[navigator.language] && lang[navigator.language][string])
+    localized = lang[navigator.language][string];
+  return localized;
 }
 
 let linkToCurrentImage = '';
 
 function processElement(node) {
-  if (node.nodeType === Node.ELEMENT_NODE) {
-    if (node.classList.contains('irc_ris')) {
-      let container = node.closest('.irc_c');
+  if (node.nodeType !== Node.ELEMENT_NODE) return;
+  if (!node.classList.contains('irc_ris')) return;
 
-      let similarImages = node.querySelectorAll('.rg_l');
-      [].forEach.call(similarImages, (image) => {
-        image.addEventListener('click', updateLinkAfterClickOnSimilar);
-      });
+  /* Track clicks on similar images */
+  let similarImages = node.querySelectorAll('.rg_l');
+  [].forEach.call(similarImages, (image) => {
+    image.addEventListener('click', updateLinkAfterClickOnSimilar);
+  });
 
-      let thumbnail = document.querySelector('img[name="' + container.dataset.itemId + '"]');
-      let meta = thumbnail.closest('.rg_bx').querySelector('.rg_meta');
+  /* Find link on large image */
+  let container = node.closest('.irc_c');
+  let src = container.querySelector('.irc_mi').src;
 
-      let metadata = JSON.parse(meta.innerHTML);
-      let src = metadata.ou;
-
-      let buttons = container.querySelector('.irc_but_r tr');
-      let button = buttons.querySelector('td.mgisga_fullSize');
-      if (button === null) {
-        addButton(buttons, 'mgisga_fullSize', getLocalizedString('viewImage'), src);
-        addButton(buttons, 'mgisga_otherRes', getLocalizedString('otherResolutions'), searchOtherResolutions);
-      } else {
-        let link = button.querySelector('a');
-        link.href = src;
-      }
-      linkToCurrentImage = src;
-    }
+  let buttons = container.querySelector('.irc_but_r tr');
+  let button = buttons.querySelector('td.mgisga_fullSize');
+  if (button === null) {
+    addButton(buttons, 'mgisga_fullSize', getLocalizedString('viewImage'), src);
+    addButton(buttons, 'mgisga_otherRes', getLocalizedString('otherResolutions'), searchOtherResolutions);
+  } else {
+    let link = button.querySelector('a');
+    link.href = src;
   }
+
+  linkToCurrentImage = src;
 }
 
 /* buttonReaction may be string-url or function-callback */
@@ -109,9 +110,8 @@ function searchOtherResolutions() {
     method: 'GET',
     url: 'https://images.google.com/searchbyimage?&image_url=' + linkToCurrentImage,
     onload: response=>{
-      removeSplashscreen();
       let imgID = response.responseText.match(/simg:([^&]+)/)[1];
-      let tld = location.host.match(/\w+$/)[0];
+      let tld = location.host.match(/google\.(.+)$/)[1];
       location.href = 'https://www.google.' + tld + '/search?tbm=isch&tbs=simg:' + imgID;
     }
   });
@@ -136,7 +136,7 @@ top: 0;
 left: 0;
 width: 100%;
 height: 100%;
-z-index: 103;
+z-index: 666;
 opacity: 0.7;
 `;
 
@@ -149,13 +149,6 @@ top: calc(50% - 12px);
 filter: invert();
 `;
 }
-
-function removeSplashscreen() {
-  let splashscreen = document.querySelector('.mgisga_splashscreen');
-  if (splashscreen)
-    splashscreen.remove();
-}
-
 
 const observer = new MutationObserver((mutations) => {
   mutations.forEach((mutation) => {
