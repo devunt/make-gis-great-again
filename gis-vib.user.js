@@ -4,7 +4,7 @@
 // @name:sl         Gumb "Ogled slike" na Google Slikah
 // @name:uk         Google Search кнопка "Показати зображення"
 // @name:lt         Google paieškos mygtukas "Rodyti vaizdą"
-// @name:ja         Google検索「画像を表」ボタン
+// @name:ja         Google検索「画像を表示」ボタン
 // @namespace       https://github.com/devunt/make-gis-great-again
 // @icon            https://raw.githubusercontent.com/devunt/make-gis-great-again/master/icons/icon.png
 // @version         1.3
