@@ -67,6 +67,13 @@ function processElement(node) {
   /* Find link on large image */
   let container = node.closest('.irc_c');
   let src = container.querySelector('.irc_mi').src;
+  if (src === '') {
+    let thumbnail = document.querySelector('img[name="' + container.dataset.itemId + '"]');
+    let meta = thumbnail.closest('.rg_bx').querySelector('.rg_meta');
+
+    let metadata = JSON.parse(meta.innerHTML);
+    src = metadata.ou;
+  }
 
   let buttons = container.querySelector('.irc_but_r tr');
   let button = buttons.querySelector('td.mgisga_fullSize');
