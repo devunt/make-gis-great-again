@@ -4,6 +4,7 @@
 // @name:sl         Gumb "Ogled slike" na Google Slikah
 // @name:uk         Google Search кнопка "Показати зображення"
 // @name:lt         Google paieškos mygtukas "Rodyti vaizdą"
+// @name:ja         Google検索「画像を表」ボタン
 // @namespace       https://github.com/devunt/make-gis-great-again
 // @icon            https://raw.githubusercontent.com/devunt/make-gis-great-again/master/icons/icon.png
 // @version         1.3
@@ -12,6 +13,7 @@
 // @description:sl  Ponovno prikaže gumb "Ogled slike" na Google Slikah.
 // @description:uk  Цей скрипт додає кнопку "Показати зображення" до результатів Google Image Search
 // @description:lt  Šis vartotojo skriptas prideda mygtuką "Rodyti vaizdą" į Google vaizdo paieškos rezultatus.
+// @description:ja  このUserScriptはGoogle検索結果に「画像を表示」ボタンを追加します。
 // @description:pl  Ten skrypt przywraca przycisk "Pokaż Obraz" do wyszukiwarki obrazów Google
 // @author          Bae Junehyeon
 // @run-at          document-end
