@@ -27,7 +27,7 @@ const lang = {
   sl: 'Ogled slike',
   ar: 'عرض الصورة',
   de: 'Bild ansehen',
-  fr: 'Voir l\'image',
+  tr: 'Resmi görüntüle',
   pt: 'Ver imagem',
   lt: 'Rodyti vaizdą',
   pl: 'Pokaż Obraz',
