@@ -19,7 +19,7 @@
 // ==/UserScript==
 
 const lang = {
-  en: 'View Image',
+  en: 'View image',
   ru: 'Показать в полном размере',
   ja: '画像を表示',
   he: 'הצג תמונה',
