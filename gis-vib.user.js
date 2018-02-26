@@ -1,18 +1,23 @@
 // ==UserScript==
 // @name            Google Search "View Image" Button
+// @name:ja         Google検索「画像を表示」ボタン
+// @name:lt         Google paieškos mygtukas "Rodyti vaizdą"
+// @name:nl         Google zoeken "Afbeelding bekijken" knop
+// @name:pl         Przycisk "Pokaż obraz" w wyszukiwarce obrazów Google 
 // @name:ru         Google Search кнопка "Показать в полном размере"
 // @name:sl         Gumb "Ogled slike" na Google Slikah
 // @name:uk         Google Search кнопка "Показати зображення"
-// @name:lt         Google paieškos mygtukas "Rodyti vaizdą"
 // @namespace       https://github.com/devunt/make-gis-great-again
 // @icon            https://raw.githubusercontent.com/devunt/make-gis-great-again/master/icons/icon.png
 // @version         1.3.1
 // @description     This userscript adds "View Image" button to Google Image Search results.
+// @description:ja  このUserScriptはGoogle検索結果に「画像を表示」ボタンを追加します。
+// @description:lt  Šis vartotojo skriptas prideda mygtuką "Rodyti vaizdą" į Google vaizdo paieškos rezultatus.
+// @description:nl  Voegt de "Afbeelding bekijken" knop aan toe aan Google Afbeeldingen.
+// @description:pl  Ten skrypt przywraca przycisk "Pokaż obraz" do wyszukiwarki obrazów Google
 // @description:ru  Этот скрипт добавляет кнопку "Показать в полном размере" к результатам Google Image Search.
 // @description:sl  Ponovno prikaže gumb "Ogled slike" na Google Slikah.
 // @description:uk  Цей скрипт додає кнопку "Показати зображення" до результатів Google Image Search
-// @description:lt  Šis vartotojo skriptas prideda mygtuką "Rodyti vaizdą" į Google vaizdo paieškos rezultatus.
-// @description:pl  Ten skrypt przywraca przycisk "Pokaż Obraz" do wyszukiwarki obrazów Google
 // @author          Bae Junehyeon
 // @run-at          document-end
 // @include         http*://*.google.tld/search*tbm=isch*
@@ -24,25 +29,27 @@
 // ==/UserScript==
 
 const lang = {
+  ar: {viewImage: 'عرض الصورة'},
+  de: {viewImage: 'Bild ansehen'},
   en: {
     viewImage: 'View Image',
     otherResolutions: 'Other resolutions'
   },
+  fr: {viewImage: 'Voir l\'image'},
+  ja: {viewImage: '画像を表示'},
+  he: {viewImage: 'הצג תמונה'},
+  lt: {viewImage: 'Rodyti vaizdą'},
+  nl: {viewImage: 'Afbeelding bekijken'},
+  pl: {viewImage: 'Pokaż Obraz'},
+  pt: {viewImage: 'Ver imagem'},
   ru: {
     viewImage: 'Показать в полном размере',
     otherResolutions: 'Все размеры'
   },
-  uk: {viewImage: 'Показати зображення'},
-  ja: {viewImage: '画像を表示'},
-  he: {viewImage: 'הצג תמונה'},
-  fr: {viewImage: 'Voir l\'image'},
-  sl: {viewImage: 'Ogled slike'},
-  ar: {viewImage: 'عرض الصورة'},
-  de: {viewImage: 'Bild ansehen'},
-  pt: {viewImage: 'Ver imagem'},
-  lt: {viewImage: 'Rodyti vaizdą'},
-  pl: {viewImage: 'Pokaż Obraz'},
   se: {viewImage: 'Visa bild'},
+  sl: {viewImage: 'Ogled slike'},
+  tr: {viewImage: 'Resmi görüntüle'},
+  uk: {viewImage: 'Показати зображення'},
 };
 
 function getLocalizedString(string) {
