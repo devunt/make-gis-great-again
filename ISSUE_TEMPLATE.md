@@ -1,0 +1,6 @@
+- Are you using browser extension or userscript?
+- Is "Make GIS great again" working on other pages? 
+- Is error disappeared when you changed extension/userscript to userscript/extension?
+- Link to page where error occurs
+- Screenshot of page where error occurs
+- Screenshot of Developer tools' "Console" (Firefox — `Control+Shift+K`, Chrome — `Ctrl+Shift+J`)
