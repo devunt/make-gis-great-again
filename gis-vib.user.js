@@ -26,6 +26,7 @@
 const lang = {
   en: 'View image',
   ru: 'Показать в полном размере',
+  'zh-CN': '查看原图',
   ja: '画像を表示',
   he: 'הצג תמונה',
   fr: 'Voir l\'image',
