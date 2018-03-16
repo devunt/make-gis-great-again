@@ -102,7 +102,8 @@ function addButton(buttonContainer, buttonClass, buttonText, buttonReaction) {
 
     let button = openButton.cloneNode(true);
     button.classList.add(buttonClass);
-    button.querySelector('._WKw').innerText = buttonText;
+    button.querySelector('span:first-child').remove();
+    button.querySelector('span:last-child').textContent = buttonText;
 
     let link = button.querySelector('a');
     link.className = '';
