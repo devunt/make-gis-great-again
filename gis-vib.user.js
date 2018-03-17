@@ -38,6 +38,7 @@ const lang = {
   pl: 'Pokaż obraz',
   nl: 'Afbeelding bekijken',
   se: 'Visa bild',
+  'fi-FI': 'Näytä kuva',
   uk: 'Показати зображення'
 };
 
