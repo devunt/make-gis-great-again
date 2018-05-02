@@ -55,7 +55,7 @@ function addButton(node) {
         image.addEventListener('click', updateLinkAfterClickOnSimilar);
       });
 
-      let thumbnail = document.querySelector('img[name="' + container.dataset.itemId + '"]');
+      let thumbnail = document.querySelector('img[id="' + container.dataset.itemId + '"]');
       let meta = thumbnail.closest('.rg_bx').querySelector('.rg_meta');
 
       let metadata = JSON.parse(meta.innerHTML);
