@@ -55,11 +55,8 @@ function addButton(node) {
         image.addEventListener('click', updateLinkAfterClickOnSimilar);
       });
 
-      let thumbnail = document.querySelector('img[id="' + container.dataset.itemId + '"]');
-      let meta = thumbnail.closest('.rg_bx').querySelector('.rg_meta');
-
-      let metadata = JSON.parse(meta.innerHTML);
-      let src = metadata.ou;
+      let thumbnail = node.querySelector('.irc_rimask.irc_rist');
+      let src = unescape(thumbnail.querySelector('.rg_l').href.match(/imgurl=([^&]+)/)[1]);
 
       let buttons = container.querySelector('.irc_but_r tr');
 
