@@ -7,9 +7,7 @@
 // @name:ru         Google Search кнопка "Показать в полном размере"
 // @name:sl         Gumb "Ogled slike" na Google Slikah
 // @name:uk         Google Search кнопка "Показати зображення"
-// @namespace       https://github.com/devunt/make-gis-great-again
-// @icon            https://raw.githubusercontent.com/devunt/make-gis-great-again/master/icons/icon.png
-// @version         1.3.1
+// @version         1.4
 // @description     This userscript adds "View Image" button to Google Image Search results.
 // @description:ja  このUserScriptはGoogle検索結果に「画像を表示」ボタンを追加します。
 // @description:lt  Šis vartotojo skriptas prideda mygtuką "Rodyti vaizdą" į Google vaizdo paieškos rezultatus.
