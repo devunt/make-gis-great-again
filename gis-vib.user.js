@@ -7,6 +7,7 @@
 // @name:pl         Przycisk "Pokaż obraz" w wyszukiwarce obrazów Google
 // @name:ja         Google検索「画像を表示」ボタン
 // @name:nl         Google zoeken "Afbeelding bekijken" knop
+// @name:hu         Google keresés "Kép megtekintése" gomb
 // @namespace       https://github.com/devunt/make-gis-great-again
 // @icon            https://raw.githubusercontent.com/devunt/make-gis-great-again/master/icons/icon.png
 // @version         1.4
@@ -18,6 +19,7 @@
 // @description:pl  Ten skrypt przywraca przycisk "Pokaż obraz" do wyszukiwarki obrazów Google
 // @description:ja  このUserScriptはGoogle検索結果に「画像を表示」ボタンを追加します。
 // @description:nl  Voegt de "Afbeelding bekijken" knop aan toe aan Google Afbeeldingen.
+// @description:hu  Ez a szkript hozzáadja a "Kép megtekintése" gombot a Google képkeresési találatokhoz.
 // @author          Bae Junehyeon
 // @run-at          document-end
 // @include         http*://*.google.tld/search*tbm=isch*
@@ -40,7 +42,8 @@ const lang = {
   nl: 'Afbeelding bekijken',
   se: 'Visa bild',
   uk: 'Показати зображення',
-  it: 'Apri immagine'
+  it: 'Apri immagine',
+  hu: 'Kép megtekintése'
 };
 
 const localizedViewImage = lang[(lang[navigator.language] ? navigator.language : 'en')];
