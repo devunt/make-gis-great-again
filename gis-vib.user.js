@@ -9,7 +9,9 @@
 // @name:nl         Google zoeken "Afbeelding bekijken" knop
 // @namespace       https://github.com/devunt/make-gis-great-again
 // @icon            https://raw.githubusercontent.com/devunt/make-gis-great-again/master/icons/icon.png
-// @version         1.4
+// @updateURL       https://raw.githubusercontent.com/devunt/make-gis-great-again/master/gis-vib.user.js
+// @downloadURL     https://raw.githubusercontent.com/devunt/make-gis-great-again/master/gis-vib.user.js
+// @version         1.5
 // @description     This userscript adds "View Image" button to Google Image Search results.
 // @description:ru  Этот скрипт добавляет кнопку "Показать в полном размере" к результатам Google Image Search.
 // @description:sl  Ponovno prikaže gumb "Ogled slike" na Google Slikah.
@@ -21,6 +23,7 @@
 // @author          Bae Junehyeon
 // @run-at          document-end
 // @include         http*://*.google.tld/search*tbm=isch*
+// @include         http*://*.google.tld/imgres*
 // ==/UserScript==
 
 const lang = {

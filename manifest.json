@@ -3,7 +3,7 @@
   "name": "Google Search \"View Image\" Button",
   "description": "Make view image button great again.",
   "homepage_url": "https://github.com/devunt/make-gis-great-again",
-  "version": "1.4",
+  "version": "1.5",
   "icons": {
     "48": "icons/icon.png",
     "96": "icons/icon@2x.png"
@@ -211,7 +211,7 @@
         "*://*.google.co.zm/*",
         "*://*.google.co.zw/*"
       ],
-      "include_globs": ["*tbm=isch*"],
+      "include_globs": ["*tbm=isch*", "*/imgres*"],
       "js": ["./gis-vib.user.js"]
     }
   ]
