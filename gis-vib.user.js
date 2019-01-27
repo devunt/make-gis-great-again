@@ -7,6 +7,7 @@
 // @name:pl         Przycisk "Pokaż obraz" w wyszukiwarce obrazów Google
 // @name:ja         Google検索「画像を表示」ボタン
 // @name:nl         Google zoeken "Afbeelding bekijken" knop
+// @name:tr         Google Görseller "Resmi Görüntüle" butonu
 // @namespace       https://github.com/devunt/make-gis-great-again
 // @icon            https://raw.githubusercontent.com/devunt/make-gis-great-again/master/icons/icon.png
 // @version         1.4
@@ -18,6 +19,7 @@
 // @description:pl  Ten skrypt przywraca przycisk "Pokaż obraz" do wyszukiwarki obrazów Google
 // @description:ja  このUserScriptはGoogle検索結果に「画像を表示」ボタンを追加します。
 // @description:nl  Voegt de "Afbeelding bekijken" knop aan toe aan Google Afbeeldingen.
+// @description:tr  Bu betik Google Görseller arama sonuçlarına "Resmi Görüntüle" düğmesini ekler.
 // @author          Bae Junehyeon
 // @run-at          document-end
 // @include         http*://*.google.tld/search*tbm=isch*
@@ -33,7 +35,7 @@ const lang = {
   sl: 'Ogled slike',
   ar: 'عرض الصورة',
   de: 'Bild ansehen',
-  tr: 'Resmi görüntüle',
+  tr: 'Resmi Görüntüle',
   pt: 'Ver imagem',
   lt: 'Rodyti vaizdą',
   pl: 'Pokaż obraz',
