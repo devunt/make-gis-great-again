@@ -12,7 +12,7 @@
 // @name:tr         Google Görseller "Resmi Görüntüle" butonu
 // @namespace       https://github.com/devunt/make-gis-great-again
 // @icon            https://raw.githubusercontent.com/devunt/make-gis-great-again/master/icons/icon.png
-// @version         1.5.0.7
+// @version         1.5.0.8
 // @description     This userscript adds "View Image" button to Google Image Search results.
 // @description:ru  Этот скрипт добавляет кнопку "Показать в полном размере" к результатам Google Image Search.
 // @description:sl  Ponovno prikaže gumb "Ogled slike" na Google Slikah.
@@ -101,8 +101,19 @@ function addButton(node) {
       });
 
       let findSrc;
-      try{findSrc=container.querySelector(':scope .irc_t .irc_mi').src;}
-      catch(e){}
+      try{
+        findSrc=container.querySelector(':scope .irc_t .irc_mi').src || container.querySelector(':scope .irc_t .irc_mut').src;
+        let focus=document.querySelector('.irc-s');
+        if (focus) {
+          let RE=new RegExp('^(?:'+location.origin+')?\/imgres[\?&]imgurl=([^&]*)');
+          for (let k of focus.querySelectorAll('a')) {
+            if (RE.test(k.href)) {
+              findSrc=unescape(RegExp.$1);
+              break;
+              }
+            }
+          }
+      }catch(e){}
 
       let thumbnail = node.querySelector('.irc_rimask.irc_rist');
       let src = findSrc || unescape(thumbnail.querySelector('.rg_l').href.match(/imgurl=([^&]+)/)[1]);
@@ -120,7 +131,6 @@ function addButton(node) {
         let openButton = buttons.querySelector(nv ? 'a' : 'td');
 
         button = openButton.cloneNode(true);
-        // moved down: button.classList.add('mgisga');
         let sp=button.querySelector(nv ? 'div span:nth-child(2)' : 'a span:nth-child(2)');
         sp.innerText = localizedViewImage;
         // remove icon and style
