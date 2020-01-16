@@ -12,7 +12,7 @@
 // @name:tr         Google Görseller "Resmi Görüntüle" butonu
 // @namespace       https://github.com/devunt/make-gis-great-again
 // @icon            https://raw.githubusercontent.com/devunt/make-gis-great-again/master/icons/icon.png
-// @version         1.5.0.8
+// @version         1.5.0.10
 // @description     This userscript adds "View Image" button to Google Image Search results.
 // @description:ru  Этот скрипт добавляет кнопку "Показать в полном размере" к результатам Google Image Search.
 // @description:sl  Ponovno prikaže gumb "Ogled slike" na Google Slikah.
@@ -92,18 +92,32 @@ const SBItxt = srch[pgL] || srch[pgL.split('-')[0]] || srch[navigator.language] 
 
 function addButton(node) {
   if (node.nodeType === Node.ELEMENT_NODE) {
-    if (node.classList.contains('irc_ris') || node.classList.contains('irc_mi')) {
-      let container = node.closest('.irc_c');
+    if (node.classList.contains('irc_ris') || node.classList.contains('Y6heUd') || node.classList.contains('irc_mi')) {
+      let container;
+      if (node.classList.contains('Y6heUd')) container = node;
+      else container = node.closest('.irc_c');
 
       let similarImages = node.querySelectorAll('.rg_l');
+
+      if (!similarImages.length) {
+        let block = container.querySelector('div[jsname="ofUehf"]');
+        if (block) block.addEventListener('click', function(ev){
+          if (ev.target.classList.contains('rg_i')) updateLinkAfterClickOnSimilar(ev);
+          });
+        }
+
       [].forEach.call(similarImages, (image) => {
         image.addEventListener('click', updateLinkAfterClickOnSimilar);
       });
 
       let findSrc;
       try{
-        findSrc=container.querySelector(':scope .irc_t .irc_mi').src || container.querySelector(':scope .irc_t .irc_mut').src;
+        findSrc=container.querySelector(':scope .irc_t .irc_mi, :scope .n3VNCb').src || container.querySelector(':scope .irc_t .irc_mut').src;
         let focus=document.querySelector('.irc-s');
+        if (!focus) {
+          let tbnID=container.parentNode.dataset['tbnid'];
+          if (tbnID) focus=document.querySelector('div[data-tbnid="'+tbnID+'"]');
+          }
         if (focus) {
           let RE=new RegExp('^(?:'+location.origin+')?\/imgres[\?&]imgurl=([^&]*)');
           for (let k of focus.querySelectorAll('a')) {
@@ -116,14 +130,19 @@ function addButton(node) {
       }catch(e){}
 
       let thumbnail = node.querySelector('.irc_rimask.irc_rist');
-      let src = findSrc || unescape(thumbnail.querySelector('.rg_l').href.match(/imgurl=([^&]+)/)[1]);
+      let src = bigSrc[findSrc] || findSrc || unescape(thumbnail.querySelector('.rg_l').href.match(/imgurl=([^&]+)/)[1]);
+      delete bigSrc[findSrc];
 
       let buttons = container.querySelector('.irc_but_r tr');
       // new version
       let nv=false;
       if (!buttons) {
         buttons = container.querySelector('.Qc8zh > .irc_ab');
-        nv=true;
+        nv=1;
+        }
+      if (!buttons) {
+        buttons = container.querySelector('.fwCBrd');
+        nv=2
         }
 
       let button = buttons.querySelector(nv? 'a.mgisga' : 'td.mgisga');
@@ -135,7 +154,7 @@ function addButton(node) {
         sp.innerText = localizedViewImage;
         // remove icon and style
         sp.parentNode.removeChild(sp.previousElementSibling);
-        sp.className='';
+        if (nv==1) sp.className='';
 
         let link = nv ? button : button.querySelector('a');
         link.href = src;
@@ -152,10 +171,10 @@ function addButton(node) {
 
         // adding "Search by image"
         let lnks = container.querySelector('.irc_b .irc_hd .irc_dsh');
-        let style = 'margin-left:1em', cls = 'o5rIVb SBIlnk';
+        let style = 'margin-left:1em', cls = 'o5rIVb SBIlnk dPO1Qe';
         if (!lnks) {
-          lnks = container.querySelector('.irc_ft').parentNode;
-          cls += ' irc_help';
+          lnks = container.querySelector('.irc_ft, .yKbIbb').parentNode;
+          cls += ' irc_help PvkmDc';
           style = '';
           }
         let lnkSBI = document.createElement('a');
@@ -176,8 +195,11 @@ function addButton(node) {
   }
 }
 
+var bigSrc={};
 function updateLinkAfterClickOnSimilar({target:node}) {
-  let src = unescape(node.closest('.rg_l').href.match(/imgurl=([^&]+)/)[1]);
+  let src = unescape(node.closest('.rg_l, a').href.match(/imgurl=([^&]+)/)[1]);
+  let i = node.src;
+  if (i) bigSrc[i]=src;
   let container = node.closest('.irc_c');
   let button = container.querySelector('.mgisga');
   let link = button.querySelector('a');
