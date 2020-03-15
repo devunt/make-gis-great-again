@@ -12,7 +12,7 @@
 // @name:tr         Google Görseller "Resmi Görüntüle" butonu
 // @namespace       https://github.com/devunt/make-gis-great-again
 // @icon            https://raw.githubusercontent.com/devunt/make-gis-great-again/master/icons/icon.png
-// @version         1.5.0.10
+// @version         1.5.0.11
 // @description     This userscript adds "View Image" button to Google Image Search results.
 // @description:ru  Этот скрипт добавляет кнопку "Показать в полном размере" к результатам Google Image Search.
 // @description:sl  Ponovno prikaže gumb "Ogled slike" na Google Slikah.
@@ -173,18 +173,20 @@ function addButton(node) {
         let lnks = container.querySelector('.irc_b .irc_hd .irc_dsh');
         let style = 'margin-left:1em', cls = 'o5rIVb SBIlnk dPO1Qe';
         if (!lnks) {
-          lnks = container.querySelector('.irc_ft, .yKbIbb').parentNode;
+          lnks = (lnks=container.querySelector('.irc_ft, .yKbIbb, .Beeb4e')) && lnks.parentNode;
           cls += ' irc_help PvkmDc';
           style = '';
           }
-        let lnkSBI = document.createElement('a');
-        let RE=/.*[\?&](hl=[^&]+)/.exec(location.search); // catch last &hl=xx parameter
-        lnkSBI.setAttribute('hrefbase','/searchbyimage?'+(RE?RE[1]+'&':'')+'image_url=');
-        lnkSBI.setAttribute('target','_blank');
-        lnkSBI.setAttribute('class',cls);
-        lnkSBI.setAttribute('style',style);
-        lnkSBI.innerText= SBItxt;
-        lnks.appendChild(lnkSBI);
+        if (lnks) {
+          let lnkSBI = document.createElement('a');
+          let RE=/.*[\?&](hl=[^&]+)/.exec(location.search); // catch last &hl=xx parameter
+          lnkSBI.setAttribute('hrefbase','/searchbyimage?'+(RE?RE[1]+'&':'')+'image_url=');
+          lnkSBI.setAttribute('target','_blank');
+          lnkSBI.setAttribute('class',cls);
+          lnkSBI.setAttribute('style',style);
+          lnkSBI.innerText= SBItxt;
+          lnks.appendChild(lnkSBI);
+          }
       }
 
       let link = nv ? button : button.querySelector('a');
