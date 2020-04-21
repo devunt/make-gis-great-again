@@ -12,7 +12,7 @@
 // @name:tr         Google Görseller "Resmi Görüntüle" butonu
 // @namespace       https://github.com/devunt/make-gis-great-again
 // @icon            https://raw.githubusercontent.com/devunt/make-gis-great-again/master/icons/icon.png
-// @version         1.5.0.11
+// @version         1.5.0.12
 // @description     This userscript adds "View Image" button to Google Image Search results.
 // @description:ru  Этот скрипт добавляет кнопку "Показать в полном размере" к результатам Google Image Search.
 // @description:sl  Ponovno prikaže gumb "Ogled slike" na Google Slikah.
@@ -174,7 +174,7 @@ function addButton(node) {
         let style = 'margin-left:1em', cls = 'o5rIVb SBIlnk dPO1Qe';
         if (!lnks) {
           lnks = (lnks=container.querySelector('.irc_ft, .yKbIbb, .Beeb4e')) && lnks.parentNode;
-          cls += ' irc_help PvkmDc';
+          cls = cls.replace(/dPO1Qe/,'') + ' irc_help PvkmDc So4Urb';
           style = '';
           }
         if (lnks) {
