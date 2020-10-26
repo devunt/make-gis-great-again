@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name            Google Search "View Image" Button
+// @name            Google Search "View Image" Button BETA
 // @name:ru         Google Search кнопка "Показать в полном размере"
 // @name:sl         Gumb "Ogled slike" na Google Slikah
 // @name:uk         Google Search кнопка "Показати зображення"
@@ -12,7 +12,7 @@
 // @name:tr         Google Görseller "Resmi Görüntüle" butonu
 // @namespace       https://github.com/devunt/make-gis-great-again
 // @icon            https://raw.githubusercontent.com/devunt/make-gis-great-again/master/icons/icon.png
-// @version         1.5.0.12
+// @version         1.5.0.14
 // @description     This userscript adds "View Image" button to Google Image Search results.
 // @description:ru  Этот скрипт добавляет кнопку "Показать в полном размере" к результатам Google Image Search.
 // @description:sl  Ponovno prikaže gumb "Ogled slike" na Google Slikah.
@@ -90,12 +90,25 @@ const pgL=document.documentElement.lang;
 const localizedViewImage = lang[pgL] || lang[pgL.split('-')[0]] || lang[navigator.language] || lang[navigator.language.split('-')[0]] || lang['en'];
 const SBItxt = srch[pgL] || srch[pgL.split('-')[0]] || srch[navigator.language] || srch[navigator.language.split('-')[0]] || srch['en'];
 
+var Btn_1, Btn_2;
+var RE=new RegExp('^(?:'+location.origin+')?\/imgres[\?&]imgurl=([^&]*)');
+
+var dataN;
+document.querySelectorAll('script').forEach((s)=>{
+  let c=s.innerText;
+  if (c.startsWith('AF_initDataCallback') && c.length>100) {
+    dataN=s;
+    }
+  })
+
 function addButton(node) {
   if (node.nodeType === Node.ELEMENT_NODE) {
     if (node.classList.contains('irc_ris') || node.classList.contains('Y6heUd') || node.classList.contains('irc_mi')) {
       let container;
       if (node.classList.contains('Y6heUd')) container = node;
       else container = node.closest('.irc_c');
+
+      let inView = container.parentNode.style.display !== "none";
 
       let similarImages = node.querySelectorAll('.rg_l');
 
@@ -110,16 +123,15 @@ function addButton(node) {
         image.addEventListener('click', updateLinkAfterClickOnSimilar);
       });
 
-      let findSrc;
+      let findSrc, focus, tbnID, t;
       try{
-        findSrc=container.querySelector(':scope .irc_t .irc_mi, :scope .n3VNCb').src || container.querySelector(':scope .irc_t .irc_mut').src;
-        let focus=document.querySelector('.irc-s');
+        findSrc=((t=container.querySelector(':scope .irc_t .irc_mi, :scope .n3VNCb')) && t.src) || ((t=container.querySelector(':scope .irc_t .irc_mut')) && t.src);
+        focus=document.querySelector('.irc-s');
         if (!focus) {
-          let tbnID=container.parentNode.dataset['tbnid'];
+          tbnID=container.parentNode.dataset['tbnid'];
           if (tbnID) focus=document.querySelector('div[data-tbnid="'+tbnID+'"]');
           }
-        if (focus) {
-          let RE=new RegExp('^(?:'+location.origin+')?\/imgres[\?&]imgurl=([^&]*)');
+        if (badImg(findSrc) && focus) {
           for (let k of focus.querySelectorAll('a')) {
             if (RE.test(k.href)) {
               findSrc=unescape(RegExp.$1);
@@ -127,11 +139,25 @@ function addButton(node) {
               }
             }
           }
+
+        if (badImg(findSrc) && dataN) {
+          let u= new RegExp('"'+tbnID+'".*?\\[.*?\\[(".*?"),','s').exec(dataN.innerText);
+          if (u && u[1]) findSrc=unescape(JSON.parse(u[1]));
+          }
+
       }catch(e){}
+
+      if (focus && inView && badImg(findSrc)) {
+        obsFocus.observe(focus,{
+          childList: false,
+          subtree: true,
+          attributes: true,
+          attributeFilter: [ "href", "src" ]
+          });
+        }
 
       let thumbnail = node.querySelector('.irc_rimask.irc_rist');
       let src = bigSrc[findSrc] || findSrc || unescape(thumbnail.querySelector('.rg_l').href.match(/imgurl=([^&]+)/)[1]);
-      delete bigSrc[findSrc];
 
       let buttons = container.querySelector('.irc_but_r tr');
       // new version
@@ -142,7 +168,7 @@ function addButton(node) {
         }
       if (!buttons) {
         buttons = container.querySelector('.fwCBrd');
-        nv=2
+        nv=2;
         }
 
       let button = buttons.querySelector(nv? 'a.mgisga' : 'td.mgisga');
@@ -172,11 +198,14 @@ function addButton(node) {
         // adding "Search by image"
         let lnks = container.querySelector('.irc_b .irc_hd .irc_dsh');
         let style = 'margin-left:1em', cls = 'o5rIVb SBIlnk dPO1Qe';
+
         if (!lnks) {
           lnks = (lnks=container.querySelector('.irc_ft, .yKbIbb, .Beeb4e')) && lnks.parentNode;
-          cls = cls.replace(/dPO1Qe/,'') + ' irc_help PvkmDc So4Urb';
+          cls = cls.replace(/dPO1Qe/,'');
+          cls += ' irc_help PvkmDc So4Urb';
           style = '';
           }
+
         if (lnks) {
           let lnkSBI = document.createElement('a');
           let RE=/.*[\?&](hl=[^&]+)/.exec(location.search); // catch last &hl=xx parameter
@@ -193,7 +222,24 @@ function addButton(node) {
       link.href = src;
       link = container.querySelector('.SBIlnk');
       link.href = link.attributes.hrefbase.value + encodeURIComponent(src);
+      if (inView) {
+        Btn_1=button;
+        Btn_2=link;
+        }
     }
+  }
+}
+
+function badImg(u) {
+  if (!u || u.startsWith('data:') || /^https?:\/\/[^\/]*?\.gstatic\.com\//.test(u)) return true;
+}
+
+function updButton(url,src) {
+  let u;
+  if ( ((u=RE.exec(url)) && (u=u[1])) || (u=src) ) {
+    u=unescape(u);
+    Btn_1.href=u;
+    Btn_2.href=Btn_2.attributes.hrefbase.value + encodeURIComponent(u);
   }
 }
 
@@ -225,5 +271,11 @@ observer.observe(document.body, {
   childList: true,
   subtree: true
 });
+
+var obsFocus = new MutationObserver((mutations) => {
+  mutations.forEach((mutation) => {
+    updButton(mutation.target.href, mutation.target.src);
+    });
+  });
 
 addButton(document.body);
