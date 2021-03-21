@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name            Google Search "View Image" Button
+// @name            Google Search "View Image" Button BETA
 // @name:ru         Google Search кнопка "Показать в полном размере"
 // @name:sl         Gumb "Ogled slike" na Google Slikah
 // @name:uk         Google Search кнопка "Показати зображення"
@@ -12,7 +12,7 @@
 // @name:tr         Google Görseller "Resmi Görüntüle" butonu
 // @namespace       https://github.com/devunt/make-gis-great-again
 // @icon            https://raw.githubusercontent.com/devunt/make-gis-great-again/master/icons/icon.png
-// @version         1.5.0.14
+// @version         1.5.0.15
 // @description     This userscript adds "View Image" button to Google Image Search results.
 // @description:ru  Этот скрипт добавляет кнопку "Показать в полном размере" к результатам Google Image Search.
 // @description:sl  Ponovno prikaže gumb "Ogled slike" na Google Slikah.
@@ -123,9 +123,13 @@ function addButton(node) {
         image.addEventListener('click', updateLinkAfterClickOnSimilar);
       });
 
+
+      let data=dataN.innerText.replace(/^AF_initDataCallback\((.*)\);$/s,"$1");
+      
       let findSrc, focus, tbnID, t;
       try{
         findSrc=((t=container.querySelector(':scope .irc_t .irc_mi, :scope .n3VNCb')) && t.src) || ((t=container.querySelector(':scope .irc_t .irc_mut')) && t.src);
+
         focus=document.querySelector('.irc-s');
         if (!focus) {
           tbnID=container.parentNode.dataset['tbnid'];
@@ -147,14 +151,14 @@ function addButton(node) {
 
       }catch(e){}
 
-      if (focus && inView && badImg(findSrc)) {
-        obsFocus.observe(focus,{
-          childList: false,
-          subtree: true,
-          attributes: true,
-          attributeFilter: [ "href", "src" ]
-          });
-        }
+if (focus && inView && badImg(findSrc)) {
+  obsFocus.observe(focus,{
+    childList: false,
+    subtree: true,
+    attributes: true,
+    attributeFilter: [ "href", "src" ]
+    });
+  }
 
       let thumbnail = node.querySelector('.irc_rimask.irc_rist');
       let src = bigSrc[findSrc] || findSrc || unescape(thumbnail.querySelector('.rg_l').href.match(/imgurl=([^&]+)/)[1]);
@@ -170,16 +174,22 @@ function addButton(node) {
         buttons = container.querySelector('.fwCBrd');
         nv=2;
         }
+      if (!buttons) {
+        buttons = container.querySelector('.kEwVtd');
+        nv=3;
+        }
 
       let button = buttons.querySelector(nv? 'a.mgisga' : 'td.mgisga');
       if (button === null) {
-        let openButton = buttons.querySelector(nv ? 'a' : 'td');
+        let openButton = buttons.querySelector(nv ? (nv==3? 'a.ZsbmCf' : 'a' ) : 'td');
+
 
         button = openButton.cloneNode(true);
-        let sp=button.querySelector(nv ? 'div span:nth-child(2)' : 'a span:nth-child(2)');
+        let sp=button.querySelector(nv ? ( nv==3? 'div span':'div span:nth-child(2)' ) : 'a span:nth-child(2)');
         sp.innerText = localizedViewImage;
+        sp.style='padding:0;';
         // remove icon and style
-        sp.parentNode.removeChild(sp.previousElementSibling);
+        try{sp.parentNode.removeChild(sp.previousElementSibling);}catch(e){}
         if (nv==1) sp.className='';
 
         let link = nv ? button : button.querySelector('a');
@@ -193,11 +203,13 @@ function addButton(node) {
         button.classList.add('mgisga');
         if (nv && button.classList.contains('irc_hol')) button.style='margin-left: 8px;';
 
-        openButton.after(button);
+        if (nv==3) openButton.before(button);
+        else openButton.after(button);
 
         // adding "Search by image"
         let lnks = container.querySelector('.irc_b .irc_hd .irc_dsh');
         let style = 'margin-left:1em', cls = 'o5rIVb SBIlnk dPO1Qe';
+
 
         if (!lnks) {
           lnks = (lnks=container.querySelector('.irc_ft, .yKbIbb, .Beeb4e')) && lnks.parentNode;
@@ -231,7 +243,9 @@ function addButton(node) {
 }
 
 function badImg(u) {
-  if (!u || u.startsWith('data:') || /^https?:\/\/[^\/]*?\.gstatic\.com\//.test(u)) return true;
+  if (!u || u.startsWith('data:') || /^https?:\/\/[^\/]*?\.gstatic\.com\//.test(u)) {
+    return true;
+    }
 }
 
 function updButton(url,src) {
