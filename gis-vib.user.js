@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name            Google Search "View Image" Button BETA
+// @name            Google Search "View Image" Button
 // @name:ru         Google Search кнопка "Показать в полном размере"
 // @name:sl         Gumb "Ogled slike" na Google Slikah
 // @name:uk         Google Search кнопка "Показати зображення"
