@@ -181,7 +181,7 @@ if (focus && inView && badImg(findSrc)) {
 
       let button = buttons.querySelector(nv? 'a.mgisga' : 'td.mgisga');
       if (button === null) {
-        let openButton = buttons.querySelector(nv ? (nv==3? 'a.ZsbmCf' : 'a' ) : 'td');
+        let openButton = buttons.querySelector(nv ? (nv==3? 'a.ZsbmCf, a.J2oL9c' : 'a' ) : 'td');
 
 
         button = openButton.cloneNode(true);
