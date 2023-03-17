@@ -12,7 +12,7 @@
 // @name:tr         Google Görseller "Resmi Görüntüle" butonu
 // @namespace       https://github.com/devunt/make-gis-great-again
 // @icon            https://raw.githubusercontent.com/devunt/make-gis-great-again/master/icons/icon.png
-// @version         1.5.0.17
+// @version         1.5.0.18
 // @description     This userscript adds "View Image" button to Google Image Search results.
 // @description:ru  Этот скрипт добавляет кнопку "Показать в полном размере" к результатам Google Image Search.
 // @description:sl  Ponovno prikaže gumb "Ogled slike" na Google Slikah.
@@ -103,9 +103,9 @@ document.querySelectorAll('script').forEach((s)=>{
 
 function addButton(node) {
   if (node.nodeType === Node.ELEMENT_NODE) {
-    if (node.classList.contains('irc_ris') || node.classList.contains('Y6heUd') || node.classList.contains('irc_mi')) {
+    if (node.classList.contains('irc_ris') || node.classList.contains('Y6heUd') || node.classList.contains('BfYA2c') || node.classList.contains('irc_mi')) {
       let container;
-      if (node.classList.contains('Y6heUd')) container = node;
+      if (node.classList.contains('Y6heUd') || node.classList.contains('BfYA2c')) container = node;
       else container = node.closest('.irc_c');
 
       let inView = container.parentNode.style.display !== "none";
@@ -128,7 +128,7 @@ function addButton(node) {
       
       let findSrc, focus, tbnID, t;
       try{
-        findSrc=((t=container.querySelector(':scope .irc_t .irc_mi, :scope .n3VNCb')) && t.src) || ((t=container.querySelector(':scope .irc_t .irc_mut')) && t.src);
+        findSrc=((t=container.querySelector(':scope .irc_t .irc_mi, :scope .n3VNCb, :scope .r48jcc')) && t.src) || ((t=container.querySelector(':scope .irc_t .irc_mut')) && t.src);
 
         focus=document.querySelector('.irc-s');
         if (!focus) {
@@ -175,13 +175,13 @@ if (focus && inView && badImg(findSrc)) {
         nv=2;
         }
       if (!buttons) {
-        buttons = container.querySelector('.kEwVtd');
+        buttons = container.querySelector('.kEwVtd, .QCk63e');
         nv=3;
         }
 
       let button = buttons.querySelector(nv? 'a.mgisga' : 'td.mgisga');
       if (button === null) {
-        let openButton = buttons.querySelector(nv ? (nv==3? 'a.ZsbmCf, a.J2oL9c, a.jAklOc' : 'a' ) : 'td');
+        let openButton = buttons.querySelector(nv ? (nv==3? 'a.ZsbmCf, a.J2oL9c, a.jAklOc, a.uZ49bd' : 'a' ) : 'td');
 
 
         button = openButton.cloneNode(true);
