@@ -185,6 +185,7 @@ if (focus && inView && badImg(findSrc)) {
 
       let button = buttons.querySelector(nv? 'a.mgisga' : 'td.mgisga'),
           pn=false;
+
       if (button === null) {
         let openButton = buttons.querySelector(nv ? (nv >= 3 ? 'a.ZsbmCf, a.J2oL9c, a.jAklOc, a.uZ49bd, a.wvfN0b' : 'a' ) : 'td');
 
