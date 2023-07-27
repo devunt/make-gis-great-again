@@ -12,7 +12,7 @@
 // @name:tr         Google Görseller "Resmi Görüntüle" butonu
 // @namespace       https://github.com/devunt/make-gis-great-again
 // @icon            https://raw.githubusercontent.com/devunt/make-gis-great-again/master/icons/icon.png
-// @version         1.5.0.18
+// @version         1.5.0.19
 // @description     This userscript adds "View Image" button to Google Image Search results.
 // @description:ru  Этот скрипт добавляет кнопку "Показать в полном размере" к результатам Google Image Search.
 // @description:sl  Ponovno prikaže gumb "Ogled slike" na Google Slikah.
@@ -178,21 +178,34 @@ if (focus && inView && badImg(findSrc)) {
         buttons = container.querySelector('.kEwVtd, .QCk63e');
         nv=3;
         }
+      if (!buttons) {
+        buttons = container.querySelector('[jsname="St5Dhe"]');
+        nv=4;
+        }
 
-      let button = buttons.querySelector(nv? 'a.mgisga' : 'td.mgisga');
+      let button = buttons.querySelector(nv? 'a.mgisga' : 'td.mgisga'),
+          pn=false;
       if (button === null) {
-        let openButton = buttons.querySelector(nv ? (nv==3? 'a.ZsbmCf, a.J2oL9c, a.jAklOc, a.uZ49bd' : 'a' ) : 'td');
-
+        let openButton = buttons.querySelector(nv ? (nv >= 3 ? 'a.ZsbmCf, a.J2oL9c, a.jAklOc, a.uZ49bd, a.wvfN0b' : 'a' ) : 'td');
 
         button = openButton.cloneNode(true);
-        let sp=button.querySelector(nv ? ( nv==3? 'div span':'div span:nth-child(2)' ) : 'a span:nth-child(2)');
+        if ( (nv == 4) && (openButton.parentNode.childNodes.length == 1) ) {
+          openButton=openButton.parentNode;
+          button = openButton.cloneNode(true);
+          pn=true;
+          }
+        let sp=button.querySelector(nv ? ( nv >= 3 ? 'div span':'div span:nth-child(2)' ) : 'a span:nth-child(2)');
+        if (!sp && (nv == 4)) {
+          button.firstChild.firstChild.innerHTML='<span style="margin: 0 10px; color: var(--uv-styles-color-text-emphasis);"></span>';
+          sp=button.firstChild.firstChild.firstChild;
+          }
         sp.innerText = localizedViewImage;
-        sp.style='padding:0;';
+        sp.style.padding='0';
         // remove icon and style
         try{sp.parentNode.removeChild(sp.previousElementSibling);}catch(e){}
         if (nv==1) sp.className='';
 
-        let link = nv ? button : button.querySelector('a');
+        let link = nv && !pn ? button : button.querySelector('a');
         link.href = src;
         if (!nv) link.className = '';
         link.removeAttribute('data-cthref');
@@ -203,7 +216,7 @@ if (focus && inView && badImg(findSrc)) {
         button.classList.add('mgisga');
         if (nv && button.classList.contains('irc_hol')) button.style='margin-left: 8px;';
 
-        if (nv==3) openButton.before(button);
+        if (nv >= 3) openButton.before(button);
         else openButton.after(button);
 
         // adding "Search by image"
